@@ -1,6 +1,6 @@
 import numpy as np
 import math
-
+from Paciente import Paciente
 class ColaSecuencial:
     __arreglo = None
     __primero = 0
@@ -8,7 +8,7 @@ class ColaSecuencial:
     __cantidad = 0
 
     def __init__(self,tamanio):
-        self.__arreglo = np.empty(int(tamanio),dtype=int)
+        self.__arreglo = np.empty(int(tamanio),dtype=Paciente)
         self.__primero = 0
         self.__ultimo = 0
         self.__cantidad = 0
@@ -16,9 +16,12 @@ class ColaSecuencial:
     def vacio(self):
         return self.__cantidad == 0
     
+    def lleno(self):
+        return self.__cantidad == len(self.__arreglo)
+    
     def Insertar(self,valor):
         if self.__cantidad == len(self.__arreglo):
-            print("No se puede agregar elemento, cola llena")
+            return
         else:
             self.__arreglo[self.__ultimo] = valor
             self.__ultimo = (self.__ultimo+1)%(len(self.__arreglo))
