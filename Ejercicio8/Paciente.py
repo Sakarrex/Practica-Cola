@@ -17,3 +17,6 @@ class Paciente:
     
     def setTiempoDeEspera(self,tiempodespera):
         self.__tiempoEspera = tiempodespera
+    
+    def __str__(self) -> str:
+        return ("Nombre: {}, DNI:{}, Especialidad: {}, tiempo de espera: {}".format(self.__nombre,self.__DNI,self.__especialidad,self.__tiempoEspera))

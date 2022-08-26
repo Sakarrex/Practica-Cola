@@ -45,15 +45,19 @@ class Simulador:
     
     def Simula(self):
         reloj = 0
-        while reloj <= self.__tiempoSimulacion:
+        for reloj in range(self.__tiempoSimulacion):
+           
             self.llegaCliente(reloj)
             self.procesarTurno(reloj)
             self.procesarPacientes(reloj)
-            reloj += 1
+            
         print("Personas que no pudieron sacar turno: {}".format(self.__cantSinTurno))
         print("Tiempo promedio de espera de turnos: {}".format(self.__sumEsperas/self.__cantTurnosAtendidos))
         for i in range(4):
-            print("Promedio Espera especialidad {}: {}".format(i+1,self.__sumEspecialidades[i]/self.__cantEspecialidadesAtendidas[i]))
+            promedio = 0
+            if self.__cantEspecialidadesAtendidas[i] != 0:
+                promedio = self.__sumEspecialidades[i]/self.__cantEspecialidadesAtendidas[i]
+            print("Promedio Espera especialidad {}: {}".format(i+1,promedio))
 
 
     def llegaCliente(self,reloj):
@@ -67,6 +71,7 @@ class Simulador:
             if self.__tiempoActualTurnos == self.__tiempoAtencionTurnos + 1:
                 if self.__colaTurnos.vacia() == False:
                     self.__pacienteEnTurnos = self.__colaTurnos.Suprimir()
+                    
                     self.__tiempoActualTurnos = self.__tiempoAtencionTurnos
                     
             else:
@@ -83,8 +88,9 @@ class Simulador:
                     self.__tiempoActualTurnos = self.__tiempoAtencionTurnos + 1
         else:
             if self.__colaTurnos.vacia() == False:
-                
-                pass
+                for i in range(self.__colaTurnos.getCantidad()):
+                    self.__colaTurnos.Suprimir()
+                    self.__cantSinTurno += 1
                 
             
         
